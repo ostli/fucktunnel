@@ -1,0 +1,33 @@
+{
+  "name": "fucktunnel",
+  "version": "0.0.1",
+  "description": "a port forwarding tool",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uv-w/fucktunnel.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/uv-w/fucktunnel/issues"
+  },
+  "homepage": "https://github.com/uv-w/fucktunnel#readme",
+  "dependencies": {
+    "cli-color": "^1.2.0",
+    "fuckport": "^2.0.0",
+    "js-yaml": "^3.8.4",
+    "lodash": "^4.17.4",
+    "mkdirp": "^0.5.1",
+    "path-extra": "^4.1.0",
+    "q": "^1.5.0",
+    "read": "^1.0.7",
+    "ssh2": "^0.5.4"
+  },
+  "devDependencies": {
+    "mocha": "^3.3.0"
+  }
+}
