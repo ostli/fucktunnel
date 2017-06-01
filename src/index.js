@@ -1,40 +1,40 @@
-const SSHConnect = require('./ssh')
-const C = require('cli-color')
-const fuckport = require('fuckport')
-const utils = require('./utils')
+const SSHConnect = require('./ssh');
+const C = require('cli-color');
+// const fuckport = require('fuckport');
+const utils = require('./utils');
+module.exports = FuckTunnel;
+function FuckTunnel (config) {
+  let sshConnect = new SSHConnect(config.proxy);
+  let self = this;
 
-module.exports = FuckTunnel
-function FuckTunnel(config) {
-  let sshConnect = new SSHConnect()
-  let self = this
+  // 获取host信息
+  // self.sshConfig = config.connection;
+  // self.tunnelsToCreate = utils.parseTunnelData[config.tunnels];
 
-  //获取host信息
-  self.sshConfig = config.connection
-  self.tunnelsToCreate = utils.parseTunnelData[config.tunnels]
-
-  utils.log(config.tunnels)
-
-
+  // utils.log(config.tunnels);
   self.connect = () => {
-      return sshConnect
-      .connect(self.sshConfig)
-      .then(() => {
-        let tunnels = []
-        self.tunnelsToCreate.forEach(function(entry) {
-          let addTunnel = sshConnect.addTunnel(entry)
-                                    .catch((err) => utils.log(C.red(err)))
-          tunnels.push(addTunnel)
-        });
+    return sshConnect
+      .connect()
+      .then((app) => {
+        let tunnels = [];
+        for (let key in config.tunnels) {
+          let value = config.tunnels[key].split(':');
+          let addTunnel = sshConnect.addTunnel({
+            remoteAddr: value[2],
+            remotePort: value[1],
+            localPort: value[0]
+          }).catch((err) => utils.log(C.red(err)));
+          tunnels.push(addTunnel);
+        }
 
-        return Promise.all(tunnels).catch(function(err) {
-            console.error(err);
+        return Promise.all(tunnels).catch(function (err) {
+          console.error('error: ' + err);
         }).then((result) => {
-          return Promise.resolve(result)
-        })
+          return Promise.resolve(result);
+        });
       })
-      .catch(() => {
-
-      })
-    }
-
+      .catch((err) => {
+        utils.log(err);
+      });
+  };
 }

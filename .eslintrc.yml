@@ -2,7 +2,7 @@ env:
   browser: true
   commonjs: true
   es6: true
-extends: 'eslint:recommended'
+extends: 'standard'
 parserOptions:
   sourceType: module
 rules:
@@ -13,7 +13,7 @@ rules:
     - error
     - unix
   quotes:
-    - error
+    - warn
     - single
   semi:
     - error
